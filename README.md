@@ -1,1 +1,1 @@
-# Tarea02_Gen-tico
+# Tarea02_Genetico
