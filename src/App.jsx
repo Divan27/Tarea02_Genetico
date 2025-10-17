@@ -1,35 +1,32 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from 'react';
+import Header from './components/Header';
+import LimitInput from './components/LimitInput';
+import NumberSet from './components/NumberSet';
+import GenerationProgress from './components/GenerationProgress';
+import FinalSolution from './components/FinalSolution';
+import './App.css';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [limit, setLimit] = useState(0);
+  const [numbers, setNumbers] = useState([]);
+
+  const generateNumbers = () => {
+    const randomSet = Array.from({ length: 15 }, () =>
+      Math.floor(Math.random() * 50 + 1)
+    );
+    setNumbers(randomSet);
+  };
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>BIENVENIDOS</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <div className="app-container">
+      <Header />
+      <LimitInput onLimitChange={setLimit} />
+      <button onClick={generateNumbers}>Generar conjunto aleatorio</button>
+      <NumberSet numbers={numbers} />
+      <GenerationProgress />
+      <FinalSolution />
+    </div>
+  );
 }
 
-export default App
+export default App;
