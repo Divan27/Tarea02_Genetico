@@ -67,7 +67,7 @@ function mutar(individuo, probabilidadMutacion) {
   return individuoMutado;
 }
 
-export function runGeneticAlgorithm(numeros, limite, tamanoPoblacion = 20, numeroGeneraciones = 30) {
+export function runGeneticAlgorithm(numeros, limite, tamanoPoblacion = 10, numeroGeneraciones = 30) {
   const resultados = {
     generaciones: [],
     mejorSolucion: null,
@@ -94,7 +94,12 @@ export function runGeneticAlgorithm(numeros, limite, tamanoPoblacion = 20, numer
       numero: generacion,
       mejorAptitud: mejorAptitudGeneracion,
       mejorSuma: sumaGeneracion,
-      mejorIndividuo: mejorIndividuoGeneracion.slice()
+      mejorIndividuo: mejorIndividuoGeneracion.slice(),
+      individuos: poblacion.map((ind, idx) => ({
+        cromosoma: ind.slice(),
+        aptitud: aptitudes[idx],
+        subconjunto: ind.map((bit, i) => bit === 1 ? numeros[i] : null).filter(x => x !== null)
+      }))
     });
     if (mejorAptitudGeneracion > resultados.mejorAptitud) {
       resultados.mejorAptitud = mejorAptitudGeneracion;
