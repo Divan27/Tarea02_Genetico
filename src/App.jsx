@@ -1,32 +1,20 @@
-import { useState } from 'react';
-import Header from './components/Header';
-import LimitInput from './components/LimitInput';
-import NumberSet from './components/NumberSet';
-import GenerationProgress from './components/GenerationProgress';
-import FinalSolution from './components/FinalSolution';
-import './App.css';
+import { runGeneticAlgorithm } from '../utils/geneticAlgorithm';
 
-function App() {
-  const [limit, setLimit] = useState(0);
-  const [numbers, setNumbers] = useState([]);
-
-  const generateNumbers = () => {
-    const randomSet = Array.from({ length: 15 }, () =>
-      Math.floor(Math.random() * 50 + 1)
-    );
-    setNumbers(randomSet);
-  };
-
+function FinalSolution({ resultado, numbers }) {
+  if (!resultado) return null;
+  const { mejorSolucion, mejorAptitud, generacionMejorSolucion } = resultado;
+  // Convertir el vector binario a subconjunto de números
+  const subconjuntoOptimo = numbers
+    ? numbers.filter((num, idx) => mejorSolucion[idx] === 1)
+    : [];
   return (
-    <div className="app-container">
-      <Header />
-      <LimitInput onLimitChange={setLimit} />
-      <button onClick={generateNumbers}>Generar conjunto aleatorio</button>
-      <NumberSet numbers={numbers} />
-      <GenerationProgress />
-      <FinalSolution />
-    </div>
+    <section>
+      <h2>Mejor solución encontrada</h2>
+      <p>Subconjunto óptimo: {subconjuntoOptimo.join(', ')}</p>
+      <p>Aptitud: {mejorAptitud}</p>
+      <p>Generación: {generacionMejorSolucion}</p>
+    </section>
   );
 }
 
-export default App;
+export default FinalSolution;
