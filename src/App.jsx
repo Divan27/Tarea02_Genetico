@@ -11,7 +11,7 @@ function App() {
   const [numbers, setNumbers] = useState([]);
 
   const generateNumbers = () => {
-    const randomSet = Array.from({ length: 15 }, () =>
+    const randomSet = Array.from({ length: 25 }, () =>
       Math.floor(Math.random() * 50 + 1)
     );
     setNumbers(randomSet);
