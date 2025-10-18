@@ -67,7 +67,7 @@ function mutar(individuo, probabilidadMutacion) {
   return individuoMutado;
 }
 
-export function runGeneticAlgorithm(numeros, limite, tamanoPoblacion = 10, numeroGeneraciones = 30) {
+export function runGeneticAlgorithm(numeros, limite, tamanoPoblacion = 10, numeroGeneraciones = 100) {
   const resultados = {
     generaciones: [],
     mejorSolucion: null,
