@@ -38,6 +38,9 @@ function App() {
   const [limit, setLimit] = useState(0); // Límite superior establecido por el usuario
   const [resultado, setResultado] = useState(null); // Resultado final del algoritmo
   const [generaciones, setGeneraciones] = useState([]); // Historial de todas las generaciones
+  const [tamanoPoblacion, setTamanoPoblacion] = useState(10); // Tamaño de la población
+  const [numeroGeneraciones, setNumeroGeneraciones] = useState(100); // Cantidad de generaciones
+  const [cantidadNumeros, setCantidadNumeros] = useState(15); // Cantidad de números generados
 
   /**
    * Ejecuta el algoritmo genético completo
@@ -49,17 +52,16 @@ function App() {
    * @returns {void}
    */
   const handleRunAlgorithm = () => {
-    if (!limit) return;
+    if (!limit || !cantidadNumeros) return;
     
     // Generar conjunto aleatorio de números
-    const cantidad = 10;
     const min = 1;
     const max = limit;
-    const nuevos = Array.from({ length: cantidad }, () => Math.floor(Math.random() * (max - min + 1)) + min);
+    const nuevos = Array.from({ length: cantidadNumeros }, () => Math.floor(Math.random() * (max - min + 1)) + min);
     setNumbers(nuevos);
     
-    // Ejecutar el algoritmo genético
-    const res = runGeneticAlgorithm(nuevos, limit);
+    // Ejecutar el algoritmo genético con los parámetros configurables
+    const res = runGeneticAlgorithm(nuevos, limit, tamanoPoblacion, numeroGeneraciones);
     setResultado(res);
     setGeneraciones(res.generaciones);
   };
@@ -80,6 +82,45 @@ function App() {
     setGeneraciones([]);
   };
 
+  /**
+   * Maneja el cambio del tamaño de la población
+   * 
+   * @function
+   * @param {number} value - Nuevo tamaño de población
+   * @returns {void}
+   */
+  const handlePopulationChange = (value) => {
+    setTamanoPoblacion(value);
+    setResultado(null);
+    setGeneraciones([]);
+  };
+
+  /**
+   * Maneja el cambio de la cantidad de generaciones
+   * 
+   * @function
+   * @param {number} value - Nueva cantidad de generaciones
+   * @returns {void}
+   */
+  const handleGenerationsChange = (value) => {
+    setNumeroGeneraciones(value);
+    setResultado(null);
+    setGeneraciones([]);
+  };
+
+  /**
+   * Maneja el cambio de la cantidad de números generados
+   * 
+   * @function
+   * @param {number} value - Nueva cantidad de números
+   * @returns {void}
+   */
+  const handleCantidadNumerosChange = (value) => {
+    setCantidadNumeros(value);
+    setResultado(null);
+    setGeneraciones([]);
+  };
+
   return (
     <div className="app-desktop-container">
       <Header />
@@ -87,10 +128,15 @@ function App() {
         <div className="left-column">
           <section className="controls-panel card">
             <h2>Configuración</h2>
-            <LimitInput onLimitChange={handleLimitChange} />
+            <LimitInput 
+              onLimitChange={handleLimitChange}
+              onPopulationChange={handlePopulationChange}
+              onGenerationsChange={handleGenerationsChange}
+              onCantidadNumerosChange={handleCantidadNumerosChange}
+            />
             <NumberSet numbers={numbers} />
             <div style={{ display: 'flex', justifyContent: 'center', marginTop: '0.5rem' }}>
-              <button className="main-action-btn" onClick={handleRunAlgorithm} disabled={!limit}>
+              <button className="main-action-btn" onClick={handleRunAlgorithm} disabled={!limit || !cantidadNumeros}>
                 Iniciar Algoritmo Genético
               </button>
             </div>
