@@ -144,7 +144,9 @@ function GenerationProgress({ generaciones }) {
           display: 'grid', 
           gridTemplateColumns: '1fr', 
           gap: '0.4rem',
-          width: '100%'
+          width: '100%',
+          maxHeight: gen.individuos.length > 10 ? '400px' : 'none',
+          overflowY: gen.individuos.length > 10 ? 'auto' : 'visible'
         }}>
           {gen.individuos.map((ind, i) => (
             <div 
