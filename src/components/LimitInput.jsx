@@ -10,7 +10,7 @@ function LimitInput({ onLimitChange }) {
   };
 
   return (
-    <section>
+    <div style={{ marginBottom: '1.5rem' }}>
       <label htmlFor="limit">Valor límite L:</label>
       <input
         type="number"
@@ -18,8 +18,9 @@ function LimitInput({ onLimitChange }) {
         value={limit}
         onChange={handleChange}
         placeholder="Ingrese el valor de L"
+        min="1"
       />
-    </section>
+    </div>
   );
 }
 
