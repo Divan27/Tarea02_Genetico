@@ -1,8 +1,48 @@
+/**
+ * @fileoverview Componente GenerationProgress para visualizar el progreso del algoritmo genético
+ * 
+ * Este componente muestra las generaciones y sus respectivos individuos.
+ * Permite navegar entre generaciones y visualizar
+ * la información detallada de cada individuo en la población, incluyendo sus
+ * aptitudes y subconjuntos seleccionados.
+ * 
+ * Características principales:
+ * - Navegación tipo carrusel entre generaciones
+ * - Destacado visual del mejor individuo de cada generación
+
+ * 
+ * @author Roymar Castillo
+ * @author Dilan Zamora
+ * 
+ * @version 1.0.0
+ */
+
 import { useState } from 'react';
 
+/**
+ * Componente GenerationProgress para mostrar el progreso evolutivo
+ * 
+ * Muestra información detallada de cada generación del algoritmo genético,
+ * incluyendo todos los individuos de la población, sus aptitudes y los
+ * subconjuntos que representan.
+ * 
+ * @component
+ * @param {Object} props - Propiedades del componente
+ * @param {Array<Object>} props.generaciones - Array con la información de cada generación
+ * @param {number} props.generaciones[].numero - Número de la generación
+ * @param {number} props.generaciones[].mejorAptitud - Mejor aptitud de la generación
+ * @param {number} props.generaciones[].mejorSuma - Suma del mejor individuo
+ * @param {Array<Object>} props.generaciones[].individuos - Array de individuos en la generación
+ * @param {Array<number>} props.generaciones[].individuos[].cromosoma - Representación binaria del individuo
+ * @param {number} props.generaciones[].individuos[].aptitud - Aptitud del individuo
+ * @param {Array<number>} props.generaciones[].individuos[].subconjunto - Números seleccionados por el individuo
+ * @returns {JSX.Element} Panel interactivo con el progreso de generaciones
+ */
 function GenerationProgress({ generaciones }) {
+  /** @type {[number, Function]} Índice de la generación actualmente mostrada */
   const [currentGenIndex, setCurrentGenIndex] = useState(0);
 
+  // Mostrar mensaje informativo cuando no hay datos disponibles
   if (!generaciones || generaciones.length === 0) {
     return (
       <div style={{ 
@@ -19,6 +59,7 @@ function GenerationProgress({ generaciones }) {
     );
   }
 
+  // Obtener los datos de la generación actual
   const gen = generaciones[currentGenIndex];
 
   return (
@@ -29,7 +70,7 @@ function GenerationProgress({ generaciones }) {
       gap: '0.5rem'
     }}>
       
-      {/* Navigation Header - Compact */}
+
       <div style={{ 
         display: 'flex', 
         justifyContent: 'space-between', 
